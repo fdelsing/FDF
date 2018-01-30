@@ -6,7 +6,7 @@
 /*   By: fdelsing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/13 17:28:58 by fdelsing          #+#    #+#             */
-/*   Updated: 2018/01/16 10:39:00 by fdelsing         ###   ########.fr       */
+/*   Updated: 2018/01/22 15:30:37 by fdelsing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int		ft_mapsize_x(char *s)
 	return (count);
 }
 
-int		**ft_map(t_info *inf)
+int		**ft_map(t_param *p)
 {
 	int		i;
 	int		x;
@@ -71,14 +71,14 @@ int		**ft_map(t_info *inf)
 	int		**map;
 	char	**split;
 
-	if (!(map = (int**)malloc(sizeof(int*) * inf->y)))
+	if (!(map = (int**)malloc(sizeof(int*) * p->len_y)))
 		ft_exit();
 	x = 0;
 	i = 0;
-	while (inf->temp[x])
+	while (p->temp[x])
 	{
-		split = ft_strsplit(inf->temp[x], ' ');
-		if (!(map[i] = (int*)malloc(sizeof(int) * inf->x)))
+		split = ft_strsplit(p->temp[x], ' ');
+		if (!(map[i] = (int*)malloc(sizeof(int) * p->len_x)))
 		{
 			i++;
 			while (i-- >= 0)
@@ -87,36 +87,36 @@ int		**ft_map(t_info *inf)
 			ft_exit();
 		}
 		y = -1;
-		while (++y < inf->x)
+		while (++y < p->len_x)
 			map[i][y] = ft_atoi(split[y]);
 		x++;
 		i++;
 		ft_free_ctab(split);
 	}
-//	ft_free_ctab(inf->temp);
+//	ft_free_ctab(p->temp);
 	return (map);
 }
 
-void		ft_check_error(t_info *inf, char **argv)
+void		ft_check_error(t_param *p, char **argv)
 {
 	int		fd;
 	int		x;
 	int		xsize;
 
-	inf->y = ft_mapsize_y(argv);
-	if (!(inf->temp = (char**)malloc(sizeof(char*)
-					* ((inf->y) + 1))))
+	p->len_y = ft_mapsize_y(argv);
+	if (!(p->temp = (char**)malloc(sizeof(char*)
+					* ((p->len_y) + 1))))
 		ft_exit();
 	fd = open(argv[1], O_RDONLY);
 	x = 0;
-	while (get_next_line(fd, &(inf->temp[x])) == 1)
+	while (get_next_line(fd, &(p->temp[x])) == 1)
 		x++;
-	free(inf->temp[x]);
-	inf->temp[inf->y] = 0;
-	inf->x = ft_mapsize_x(inf->temp[x - 1]);
+	free(p->temp[x]);
+	p->temp[p->len_y] = 0;
+	p->len_x = ft_mapsize_x(p->temp[x - 1]);
 	while (--x > 0)
 	{
-		if (inf->x != ft_mapsize_x(inf->temp[x-1]))
+		if (p->len_x != ft_mapsize_x(p->temp[x-1]))
 		{
 			ft_putendl("ERROR");
 			ft_exit();
