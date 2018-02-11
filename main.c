@@ -6,7 +6,7 @@
 /*   By: fdelsing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/09 20:22:05 by fdelsing          #+#    #+#             */
-/*   Updated: 2018/01/30 15:53:13 by fdelsing         ###   ########.fr       */
+/*   Updated: 2018/02/11 09:27:29 by fdelsing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>
+#include <float.h>
 
-int		ft_translation(int keycode, t_param *p)
-{
-	printf("keycode = %d\n", keycode);
-	if (keycode == 124)
-		p->c_x += 10;
-	if (keycode == 123)
-		p->c_x -= 10;
-	if (keycode == 126)
-		p->c_y -= 10;
-	if (keycode == 125)
-		p->c_y += 10;
-	ft_fill_img(p);
-	return (0);
-}
+
 
 void	ft_init_ctx(t_param *p)
 {
@@ -44,6 +32,8 @@ void	ft_init_ctx(t_param *p)
 		p->c_y = ((WIN_Y - p->len_y) / 2) + 1;
 	else
 		p->c_y = (WIN_Y - p->len_y) / 2;
+	p->space_x = 20;
+	p->space_y = 20;
 	p->mlx = mlx_init();
 	p->win = mlx_new_window(p->mlx, WIN_X, WIN_Y, "fdf");	
 	p->img.img = mlx_new_image(p->mlx, WIN_X, WIN_Y);
@@ -55,6 +45,10 @@ int		ft_keyhook(int keycode, t_param *p)
 {
 	if (keycode == 53)
 		exit(0);
+	if (keycode == 257)
+	{
+		mlx_key_hook(p->win, ft_shift, p);
+	}
 	if (keycode >= 123 && keycode <= 126)
 	{
 		ft_bzero((char*)p->img.data_img, (WIN_Y * WIN_X) * 4);
@@ -63,7 +57,7 @@ int		ft_keyhook(int keycode, t_param *p)
 	return (0);
 }
 
-int		ft_mousehook(int button, int x, int y, t_param p)
+int		ft_mousehook(int button, int x, int y, t_param *p)
 {
 	int i;
 
@@ -83,8 +77,25 @@ int		main(int argc, char **argv)
 	t_img	img;
 	int		x;
 	int		y;
+	
+	p.pi = acos(0) * 2;
+	p.rad_x = 180 / p.pi;
+	p.rad_y = p.rad_x;
+	p.angle_x = sin(p.rad_x);
+	p.angle_y = sin(p.rad_y);
 
-	ft_check_error(&p, argv);
+	printf("pi = %f\n", p.pi);
+/*	float	pi;
+	float	f;
+
+	pi = acos(0) * 2;
+	printf("pi = %f\n", pi);
+	f = 15;
+
+	printf("cosf = %f\n", cos(f));
+	printf("flt_min = %f\n", FLT_MIN);
+	printf("flt_mAX = %f\n", FLT_MAX);*/
+	ft_check_error(&p, argv, argc);
 	ft_init_ctx(&p);
 	////////////////// print map ////////////////////// 
 	y = -1;
