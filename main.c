@@ -6,7 +6,7 @@
 /*   By: fdelsing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/09 20:22:05 by fdelsing          #+#    #+#             */
-/*   Updated: 2018/02/11 09:27:29 by fdelsing         ###   ########.fr       */
+/*   Updated: 2018/02/12 08:37:32 by fdelsing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ void	ft_init_ctx(t_param *p)
 		p->c_y = ((WIN_Y - p->len_y) / 2) + 1;
 	else
 		p->c_y = (WIN_Y - p->len_y) / 2;
-	p->space_x = 20;
-	p->space_y = 20;
+	p->space_x = 10;
+	p->space_y = 10;
 	p->mlx = mlx_init();
 	p->win = mlx_new_window(p->mlx, WIN_X, WIN_Y, "fdf");	
 	p->img.img = mlx_new_image(p->mlx, WIN_X, WIN_Y);
@@ -79,10 +79,11 @@ int		main(int argc, char **argv)
 	int		y;
 	
 	p.pi = acos(0) * 2;
-	p.rad_x = 180 / p.pi;
+	p.rad_x = p.pi / 2 /* 180 / p.pi*/;
 	p.rad_y = p.rad_x;
 	p.angle_x = sin(p.rad_x);
 	p.angle_y = sin(p.rad_y);
+
 
 	printf("pi = %f\n", p.pi);
 /*	float	pi;
@@ -97,6 +98,7 @@ int		main(int argc, char **argv)
 	printf("flt_mAX = %f\n", FLT_MAX);*/
 	ft_check_error(&p, argv, argc);
 	ft_init_ctx(&p);
+	printf("len_x = %d, len_y = %d\n", p.len_x, p.len_y);
 	////////////////// print map ////////////////////// 
 	y = -1;
 	while (++y < p.len_y)

@@ -6,7 +6,7 @@
 /*   By: fdelsing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/16 10:40:07 by fdelsing          #+#    #+#             */
-/*   Updated: 2018/02/11 09:27:33 by fdelsing         ###   ########.fr       */
+/*   Updated: 2018/02/12 10:48:34 by fdelsing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,17 @@ void	fill_img(int *add, int i, int j, int color, t_param *p)
 void	ft_adapt_coord(t_point *A, t_point *B, t_param *p)
 {
 	int	z;
-	if (p->A.x < p->len_y - 1 && p->A.y < p->len_x - 1)
-		z = p->map[p->A.x][p->A.y];
-	else
-		z = 0;
-	printf("z = %d\n", z);
 
-	A->x = (A->x * p->space_x) * p->angle_x;
-	A->y = (A->y * p->space_y) * p->angle_y;
-	B->x = (B->x * p->space_x) * p->angle_x;
-	B->y = (B->y * p->space_y) * p->angle_y;
+	z = 0;
+	/*	z = p->map[p->A.x][p->A.y];
+	printf("a.x = %d, a.y = %d, || b.x = %d, b.y = %d, || z = %d", p->A.x, p->A.y, p->B.x, p->B.y, z);
+*/
+	A->x = (A->x * p->space_x) * p->angle_x/* + (z * cos(p->rad_x))*/;
+	A->y = (A->y * p->space_y) * p->angle_y/* + (z * cos(p->rad_y))*/;
+	/*z = p->map[p->B.x][p->B.y];*/
+	B->x = (B->x * p->space_x) * p->angle_x/* + (z * cos(p->rad_x))*/;
+	B->y = (B->y * p->space_y) * p->angle_y/* + (z * cos(p->rad_y))*/;
+//	printf(" z = %d\n", z);
 }
 
 void	ft_trace(t_point A, t_point B, t_param *p)
@@ -42,8 +43,8 @@ void	ft_trace(t_point A, t_point B, t_param *p)
 	int y;
 
 	ft_adapt_coord(&A, &B, p);
-	//	printf("A.x = %d, A.y = %d\n", A.x, A.y);
-	//	printf("B.x = %d, B.y = %d\n\n", B.x, B.y);
+		printf("A.x = %d, A.y = %d\n", A.x, A.y);
+		printf("B.x = %d, B.y = %d\n\n", B.x, B.y);
 	i = 0;
 	x = B.x - A.x;
 	y = B.y - A.y; 
@@ -82,15 +83,15 @@ void	ft_fill_img(t_param *p)
 	while (p->A.x <= (p->len_x - 1))
 	{
 		p->A.y = 0;
-		while (p->A.y < (p->len_y - 1))
+		while (p->A.y <= (p->len_y - 1))
 		{
 			p->B.x = p->A.x + 1;
 			p->B.y = p->A.y;
-			if (p->B.x < p->len_x)
+			if (p->B.x < p->len_x && p->B.y < p->len_y) 
 			{
 /*				int	z;
-				z = p->map[p->A.x][p->A.y];
-	printf("a->x%d, a->y%d\n", A->x, A->y);*/
+				z = p->map[p->A.y][p->A.x];
+	printf("a->x%d, a->y%d Z = %d\n", p->A.x, p->A.y, z);*/
 	
 				if (p->angle_x < 0)
 					ft_trace(p->B, p->A, p);
