@@ -6,7 +6,7 @@
 /*   By: fdelsing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/10 17:48:26 by fdelsing          #+#    #+#             */
-/*   Updated: 2018/02/11 09:07:49 by fdelsing         ###   ########.fr       */
+/*   Updated: 2018/02/13 06:08:29 by fdelsing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,9 @@ void	ft_fill_img(t_param *p);
 int		ft_mapsize_y(char **argv);
 int		ft_count_nbr(char *s);
 int		**ft_map(t_param *p);
-int		ft_shift(int keycode, t_param *p);
 
 int		ft_escape_programm(int keycode, t_param *p);
 int		ft_translation(int keycode, t_param *p);
 int		ft_rotations(int keycode, t_param *p);
+int		ft_zoom(int keycode, t_param *p);
 #endif

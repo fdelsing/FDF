@@ -6,7 +6,7 @@
 /*   By: fdelsing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/09 20:22:05 by fdelsing          #+#    #+#             */
-/*   Updated: 2018/02/12 08:37:32 by fdelsing         ###   ########.fr       */
+/*   Updated: 2018/02/13 06:06:48 by fdelsing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,26 @@ void	ft_init_ctx(t_param *p)
 
 int		ft_keyhook(int keycode, t_param *p)
 {
+	ft_bzero((char*)p->img.data_img, (WIN_Y * WIN_X) * 4);
 	if (keycode == 53)
 		exit(0);
-	if (keycode == 257)
-	{
-		mlx_key_hook(p->win, ft_shift, p);
-	}
 	if (keycode >= 123 && keycode <= 126)
-	{
-		ft_bzero((char*)p->img.data_img, (WIN_Y * WIN_X) * 4);
 		ft_translation(keycode, p);
+	if (keycode >= 83 && keycode <= 85)
+		ft_rotations(keycode, p);
+	if (keycode == 24 || keycode == 27)
+		ft_zoom(keycode, p);
+/*	if (keycode == 24) //////// zoom
+	{
+		p->space_x += 5;
+		p->space_y += 5;
 	}
+	else if (keycode == 27) //////// zoom
+	{
+		p->space_x -= 5;
+		p->space_y -= 5;
+	}*/
+	ft_fill_img(p);
 	return (0);
 }
 
