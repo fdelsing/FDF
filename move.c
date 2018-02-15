@@ -6,7 +6,7 @@
 /*   By: fdelsing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/08 00:00:46 by fdelsing          #+#    #+#             */
-/*   Updated: 2018/02/13 06:46:56 by fdelsing         ###   ########.fr       */
+/*   Updated: 2018/02/15 06:07:32 by fdelsing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,15 @@ int		ft_rotations(int keycode, t_param *p)
 	if (keycode == 83) // rotate axe x
 	{
 		p->rad_x += 180 / p->pi;
-		p->angle_x = sin(p->rad_x);
+		p->sin_x = sin(p->rad_x);
+		p->cos_x = cos(p->rad_x);
 	}
 	if (keycode == 84) //rotate axe y
 	{	
 		p->rad_y += 180 / p->pi;
-		p->angle_y = sin(p->rad_y);
+		p->sin_y = sin(p->rad_y);
+		p->cos_x = cos(p->rad_x);
 	}
-		printf("angle = %f\n", p->angle_x);
+		printf("angle = %f\n", p->sin_x);
 	return (0);
 }

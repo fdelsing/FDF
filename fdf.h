@@ -6,7 +6,7 @@
 /*   By: fdelsing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/10 17:48:26 by fdelsing          #+#    #+#             */
-/*   Updated: 2018/02/13 06:08:29 by fdelsing         ###   ########.fr       */
+/*   Updated: 2018/02/15 07:00:02 by fdelsing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,10 @@ typedef	struct	s_param
 	float	pi;
 	float	rad_x;
 	float	rad_y;
-	float	angle_x;
-	float	angle_y;
+	float	sin_x;
+	float	sin_y;
+	float	cos_x;
+	float	cos_y;
 	t_img	img;
 	t_point	A;
 	t_point B;

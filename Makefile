@@ -6,7 +6,7 @@
 #    By: fdelsing <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/10 18:05:53 by fdelsing          #+#    #+#              #
-#    Updated: 2018/02/13 06:08:01 by fdelsing         ###   ########.fr        #
+#    Updated: 2018/02/15 06:42:22 by fdelsing         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,3 +36,11 @@ fclean: clean
 re: 
 	cd ./libft $(MAKE) re
 	fclean all
+
+################################################################################
+
+fsanitize : $(OBJ)
+	cd ./Libft $(MAKE)
+	$(CC) -g -fsanitize=address -o $(NAME) -L./Libft/ -lft $(CFLAGS) $(OBJ) 
+
+

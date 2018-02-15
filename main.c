@@ -6,7 +6,7 @@
 /*   By: fdelsing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/09 20:22:05 by fdelsing          #+#    #+#             */
-/*   Updated: 2018/02/13 06:06:48 by fdelsing         ###   ########.fr       */
+/*   Updated: 2018/02/15 05:23:19 by fdelsing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,10 @@ int		main(int argc, char **argv)
 	p.pi = acos(0) * 2;
 	p.rad_x = p.pi / 2 /* 180 / p.pi*/;
 	p.rad_y = p.rad_x;
-	p.angle_x = sin(p.rad_x);
-	p.angle_y = sin(p.rad_y);
+	p.sin_x = sin(p.rad_x);
+	p.sin_y = sin(p.rad_y);
+	p.cos_x = cos(p.rad_x);
+	p.cos_y = cos(p.rad_y);
 
 
 	printf("pi = %f\n", p.pi);
