@@ -6,7 +6,7 @@
 /*   By: fdelsing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/10 17:48:26 by fdelsing          #+#    #+#             */
-/*   Updated: 2018/02/15 07:00:02 by fdelsing         ###   ########.fr       */
+/*   Updated: 2018/02/17 05:08:47 by fdelsing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,17 +47,24 @@ typedef	struct	s_param
 	char	**temp;
 	int		len_y;
 	int		len_x;
+	float	o_x;
+	float	o_y;
 	int		c_x;
 	int		c_y;
 	int		space_x;
 	int		space_y;
+
+//	t_delta	delta;	
 	float	pi;
 	float	rad_x;
 	float	rad_y;
+	float	rad_z;
 	float	sin_x;
 	float	sin_y;
+	float	sin_z;
 	float	cos_x;
 	float	cos_y;
+	float	cos_z;
 	t_img	img;
 	t_point	A;
 	t_point B;
@@ -72,6 +79,8 @@ typedef struct	s_var
 
 void	ft_exit();
 void	ft_check_error(t_param *p, char **argv, int argc);
+void	ft_init_ctx(t_param *p);
+void	ft_init_angles(t_param *p);
 void	ft_free_ctab(char **s);
 void	ft_free_itab(int **tab, int tablen);
 void	ft_fill_img(t_param *p);

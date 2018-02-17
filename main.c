@@ -6,7 +6,7 @@
 /*   By: fdelsing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/09 20:22:05 by fdelsing          #+#    #+#             */
-/*   Updated: 2018/02/15 05:23:19 by fdelsing         ###   ########.fr       */
+/*   Updated: 2018/02/17 08:30:45 by fdelsing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include <float.h>
-
-
 
 void	ft_init_ctx(t_param *p)
 {
@@ -34,11 +32,25 @@ void	ft_init_ctx(t_param *p)
 		p->c_y = (WIN_Y - p->len_y) / 2;
 	p->space_x = 10;
 	p->space_y = 10;
+	p->o_x = ((float)p->len_x - 1) / 2;
+	p->o_y = ((float)p->len_y - 1) / 2;
 	p->mlx = mlx_init();
-	p->win = mlx_new_window(p->mlx, WIN_X, WIN_Y, "fdf");	
+	p->win = mlx_new_window(p->mlx, WIN_X, WIN_Y, "fdf");
 	p->img.img = mlx_new_image(p->mlx, WIN_X, WIN_Y);
-	p->img.data_img = (int*)mlx_get_data_addr
-		(p->img.img, &p->img.bpp, &p->img.s_l, &p->img.endian);
+	p->img.data_img = (int*)mlx_get_data_addr(p->img.img,
+			&p->img.bpp, &p->img.s_l, &p->img.endian);
+}
+
+void	ft_init_angles(t_param *p)
+{
+	p->pi = acos(0) * 2;
+	p->rad_x = p->pi / 2;
+	p->rad_y = p->rad_x;
+	p->rad_z = 0;
+	p->sin_x = sin(p->rad_x);
+	p->sin_y = sin(p->rad_y);
+	p->cos_x = cos(p->rad_x);
+	p->cos_y = cos(p->rad_y);
 }
 
 int		ft_keyhook(int keycode, t_param *p)
@@ -52,21 +64,16 @@ int		ft_keyhook(int keycode, t_param *p)
 		ft_rotations(keycode, p);
 	if (keycode == 24 || keycode == 27)
 		ft_zoom(keycode, p);
-/*	if (keycode == 24) //////// zoom
+	if (keycode == 71)
 	{
-		p->space_x += 5;
-		p->space_y += 5;
+		ft_init_angles(p);
+//		reset(keycode, p);
 	}
-	else if (keycode == 27) //////// zoom
-	{
-		p->space_x -= 5;
-		p->space_y -= 5;
-	}*/
 	ft_fill_img(p);
 	return (0);
 }
 
-int		ft_mousehook(int button, int x, int y, t_param *p)
+/*int		ft_mousehook(int button, int x, int y, t_param *p)
 {
 	int i;
 
@@ -78,7 +85,7 @@ int		ft_mousehook(int button, int x, int y, t_param *p)
 		printf("HELLO\n");
 	}
 	return (0);
-}
+}*/
 
 int		main(int argc, char **argv)
 {
@@ -86,31 +93,12 @@ int		main(int argc, char **argv)
 	t_img	img;
 	int		x;
 	int		y;
-	
-	p.pi = acos(0) * 2;
-	p.rad_x = p.pi / 2 /* 180 / p.pi*/;
-	p.rad_y = p.rad_x;
-	p.sin_x = sin(p.rad_x);
-	p.sin_y = sin(p.rad_y);
-	p.cos_x = cos(p.rad_x);
-	p.cos_y = cos(p.rad_y);
 
-
-	printf("pi = %f\n", p.pi);
-/*	float	pi;
-	float	f;
-
-	pi = acos(0) * 2;
-	printf("pi = %f\n", pi);
-	f = 15;
-
-	printf("cosf = %f\n", cos(f));
-	printf("flt_min = %f\n", FLT_MIN);
-	printf("flt_mAX = %f\n", FLT_MAX);*/
 	ft_check_error(&p, argv, argc);
 	ft_init_ctx(&p);
+	ft_init_angles(&p);
 	printf("len_x = %d, len_y = %d\n", p.len_x, p.len_y);
-	////////////////// print map ////////////////////// 
+	////////////////// print map //////////////////////
 	y = -1;
 	while (++y < p.len_y)
 	{
@@ -122,10 +110,8 @@ int		main(int argc, char **argv)
 	printf("c_x = %d, c_y = %d\n", p.c_x, p.c_y);
 	//////////////// fill img ///////////////////////
 	ft_fill_img(&p);
-	mlx_hook(p.win, 2, 1L<<8, ft_keyhook, &p);
-	mlx_hook(p.win, 4, 1L<<8, ft_mousehook, &p);
-	//mlx_key_hook(p.win, ft_keyhook, &p);
-	////////////////////////////////////////////////////////////
+	mlx_hook(p.win, 2, 1L << 8, ft_keyhook, &p);
+//	mlx_hook(p.win, 4, 1L<<8, ft_mousehook, &p);
 	mlx_loop(p.mlx);
 	return (0);
 }

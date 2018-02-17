@@ -6,7 +6,7 @@
 /*   By: fdelsing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/16 10:40:07 by fdelsing          #+#    #+#             */
-/*   Updated: 2018/02/15 08:09:06 by fdelsing         ###   ########.fr       */
+/*   Updated: 2018/02/17 08:30:49 by fdelsing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,19 @@ void	fill_img(int *add, int i, int j, int color, t_param *p)
 void	ft_adapt_coord(t_point *A, t_point *B, t_param *p)
 {
 	float z;
-	int buf;
 
+	z = 0;
 	z = p->map[p->A.y][p->A.x] * cos(p->rad_y);
-
-	A->x = (int)((A->x * p->space_x) * p->sin_x);
-	A->y = (int)((A->y * p->space_y) * p->sin_y) + (int)z;
-
+	A->x = (int)((((float)A->x - p->o_x) * p->space_x) * p->sin_x);
+	A->y = (int)((((float)A->y - p->o_y) * p->space_y) * p->sin_y) + (int)z;
 	z = p->map[p->B.y][p->B.x] * cos(p->rad_y);
+	B->x = (int)((((float)B->x - p->o_x) * p->space_x) * p->sin_x);
+	B->y = (int)((((float)B->y - p->o_y) * p->space_y) * p->sin_y) + (int)z;
 
-	B->x = (int)((B->x * p->space_x) * p->sin_x);
-	B->y = (int)((B->y * p->space_y) * p->sin_y) + (int)z;
+	A->x += A->y * p->cos_z;// * 5;
+	B->x += B->y * p->cos_z;// * 5;
+	A->y += A->y * p->sin_z;// * 5;
+	B->y += B->y * p->sin_z;// * 5;
 }
 
 void	ft_trace_straight(t_point A, t_point B, t_param *p, int x, int y)
@@ -41,20 +43,20 @@ void	ft_trace_straight(t_point A, t_point B, t_param *p, int x, int y)
 	int j;
 
 	i = 0;
-	if (y == 0)
-	{
-		while (i + A.x <= B.x)
-		{
-			fill_img(p->img.data_img, i + A.x,A.y, 0x0000ff, p);
-			i++;
-		}
-	}
-	i = 0;
 	if (x == 0)
 	{
 		while (i + A.y <= B.y)
 		{
-			fill_img(p->img.data_img,A.x, i + A.y, 0x0000ff, p);
+			fill_img(p->img.data_img, A.x, i + A.y, 0x0000ff, p);
+			i++;
+		}
+	}
+	i = 0;
+	if (y == 0)
+	{
+		while (i + A.x <= B.x)
+		{
+			fill_img(p->img.data_img, i + A.x, A.y, 0x0000ff, p);
 			i++;
 		}
 	}
@@ -63,37 +65,31 @@ void	ft_trace_straight(t_point A, t_point B, t_param *p, int x, int y)
 void	ft_trace(t_point A, t_point B, t_param *p)
 {
 	int i; ////x
-	float j; ////y
-	int x;
-	int y;
+	int j; ////y
+	float delta;
+	float x;
+	float y;
 
 	ft_adapt_coord(&A, &B, p);
-	//		printf("A.x = %d, A.y = %d\n", A.x, A.y);
-	//		printf("B.x = %d, B.y = %d\n\n", B.x, B.y);
 	x = B.x - A.x;
 	y = B.y - A.y;
 	if (y == 0 || x == 0)
 		ft_trace_straight(A, B, p, x, y);
 	else
 	{
+		delta = (y / x);
+	   	if (p->sin_x < 0)
+			delta = -delta;	
 		i = 0;
-		while (i + A.x <= B.x && (int)(j + A.y) != B.y)
+		while ((int)(i + A.x) <= B.x)
 		{
-			j = (x / y) * i;
-			if (j < 0)
-			{
-				fill_img(p->img.data_img, (int)(-j + A.x), -i + A.y, 0x00ffff, p);
-			}
+			j = (int)(delta * i);
+			if (p->sin_x < 0)
+				fill_img(p->img.data_img,i + A.x, (int)(j + B.y), 0x00ffff, p);
 			else
-				fill_img(p->img.data_img, (int)(j + A.x), i + A.y, 0x00ffff, p);
+				fill_img(p->img.data_img,i + A.x, (int)(j + A.y), 0x00ffff, p);
 			i++;
 		}
-		/*i = 0;
-		while (i + A.y != B.y)
-		{
-
-			i++;
-		}*/
 	}
 }
 
