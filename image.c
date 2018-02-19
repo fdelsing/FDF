@@ -6,7 +6,7 @@
 /*   By: fdelsing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/16 10:40:07 by fdelsing          #+#    #+#             */
-/*   Updated: 2018/02/17 08:30:49 by fdelsing         ###   ########.fr       */
+/*   Updated: 2018/02/19 12:56:27 by fdelsing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,23 @@ void	fill_img(int *add, int i, int j, int color, t_param *p)
 
 void	ft_adapt_coord(t_point *A, t_point *B, t_param *p)
 {
-	float z;
+	float depth_y;
+	float depth_x;
 
-	z = 0;
-	z = p->map[p->A.y][p->A.x] * cos(p->rad_y);
-	A->x = (int)((((float)A->x - p->o_x) * p->space_x) * p->sin_x);
-	A->y = (int)((((float)A->y - p->o_y) * p->space_y) * p->sin_y) + (int)z;
-	z = p->map[p->B.y][p->B.x] * cos(p->rad_y);
-	B->x = (int)((((float)B->x - p->o_x) * p->space_x) * p->sin_x);
-	B->y = (int)((((float)B->y - p->o_y) * p->space_y) * p->sin_y) + (int)z;
+	depth_y = p->map[p->A.y][p->A.x] * p->cos_y;
+	depth_x = p->map[p->A.y][p->A.x] * p->cos_x;//
+	A->x = (int)((((float)A->x - p->o_x) * p->space_x) * p->sin_x) + (int)depth_x;
+	A->y = (int)((((float)A->y - p->o_y) * p->space_y) * p->sin_y) + (int)depth_y;
 
-	A->x += A->y * p->cos_z;// * 5;
-	B->x += B->y * p->cos_z;// * 5;
-	A->y += A->y * p->sin_z;// * 5;
-	B->y += B->y * p->sin_z;// * 5;
+	depth_y = p->map[p->B.y][p->B.x] * p->cos_y;
+	depth_x = p->map[p->B.y][p->B.x] * p->cos_x;//
+	B->x = (int)((((float)B->x - p->o_x) * p->space_x) * p->sin_x)+ (int)depth_x;;
+	B->y = (int)((((float)B->y - p->o_y) * p->space_y) * p->sin_y) + (int)depth_y;
+
+	A->x += (int)((float)A->y * p->sin_z);
+	B->x += (int)((float)B->y * p->sin_z);
+	A->y += (int)((float)(A->x * p->sin_z));
+	B->y += (int)((float)(B->x * p->sin_z));
 }
 
 void	ft_trace_straight(t_point A, t_point B, t_param *p, int x, int y)
@@ -73,17 +76,22 @@ void	ft_trace(t_point A, t_point B, t_param *p)
 	ft_adapt_coord(&A, &B, p);
 	x = B.x - A.x;
 	y = B.y - A.y;
+//	printf("A.x = %d, A.y = %d\n, B.x = %d, B.y = %d\n", A.x, A.y, B.x, B.y);
 	if (y == 0 || x == 0)
 		ft_trace_straight(A, B, p, x, y);
 	else
 	{
 		delta = (y / x);
-	   	if (p->sin_x < 0)
-			delta = -delta;	
+		printf("delta %f ", delta);
+		printf("cos_x = %f, cos_y = %f\n", p->cos_x, p->cos_y);
+	   	//if (p->sin_x < 0)
+		//	delta = -delta;	
 		i = 0;
+		printf("delta %f ", delta);
 		while ((int)(i + A.x) <= B.x)
 		{
 			j = (int)(delta * i);
+			printf("j = %d\n", j);
 			if (p->sin_x < 0)
 				fill_img(p->img.data_img,i + A.x, (int)(j + B.y), 0x00ffff, p);
 			else
@@ -123,6 +131,6 @@ void	ft_fill_img(t_param *p)
 		}
 		p->A.y++;
 	}
-	printf("len_x = %d\n", p->len_x);
+//	printf("len_x = %d\n", p->len_x);
 	mlx_put_image_to_window(p->mlx,p->win, p->img.img, 0, 0);
 }

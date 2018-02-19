@@ -6,7 +6,7 @@
 /*   By: fdelsing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/09 20:22:05 by fdelsing          #+#    #+#             */
-/*   Updated: 2018/02/17 08:30:45 by fdelsing         ###   ########.fr       */
+/*   Updated: 2018/02/19 10:59:23 by fdelsing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,12 @@ void	ft_init_angles(t_param *p)
 	p->pi = acos(0) * 2;
 	p->rad_x = p->pi / 2;
 	p->rad_y = p->rad_x;
-	p->rad_z = 0;
+//	p->rad_z = 0;
 	p->sin_x = sin(p->rad_x);
 	p->sin_y = sin(p->rad_y);
 	p->cos_x = cos(p->rad_x);
 	p->cos_y = cos(p->rad_y);
+	p->sin_z = 0;
 }
 
 int		ft_keyhook(int keycode, t_param *p)
@@ -64,6 +65,8 @@ int		ft_keyhook(int keycode, t_param *p)
 		ft_rotations(keycode, p);
 	if (keycode == 24 || keycode == 27)
 		ft_zoom(keycode, p);
+	if (keycode == 269 || keycode == 262)
+		ft_depth(keycode, p);
 	if (keycode == 71)
 	{
 		ft_init_angles(p);
@@ -97,7 +100,7 @@ int		main(int argc, char **argv)
 	ft_check_error(&p, argv, argc);
 	ft_init_ctx(&p);
 	ft_init_angles(&p);
-	printf("len_x = %d, len_y = %d\n", p.len_x, p.len_y);
+//	printf("len_x = %d, len_y = %d\n", p.len_x, p.len_y);
 	////////////////// print map //////////////////////
 	y = -1;
 	while (++y < p.len_y)
@@ -107,7 +110,6 @@ int		main(int argc, char **argv)
 			printf("%d ", p.map[y][x]);
 		printf("\n");
 	}
-	printf("c_x = %d, c_y = %d\n", p.c_x, p.c_y);
 	//////////////// fill img ///////////////////////
 	ft_fill_img(&p);
 	mlx_hook(p.win, 2, 1L << 8, ft_keyhook, &p);

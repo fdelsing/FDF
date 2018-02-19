@@ -6,7 +6,7 @@
 /*   By: fdelsing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/10 17:48:26 by fdelsing          #+#    #+#             */
-/*   Updated: 2018/02/17 05:08:47 by fdelsing         ###   ########.fr       */
+/*   Updated: 2018/02/19 10:25:57 by fdelsing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,4 +93,5 @@ int		ft_escape_programm(int keycode, t_param *p);
 int		ft_translation(int keycode, t_param *p);
 int		ft_rotations(int keycode, t_param *p);
 int		ft_zoom(int keycode, t_param *p);
+int		ft_depth(int keycode, t_param *p);
 #endif
