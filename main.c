@@ -6,7 +6,7 @@
 /*   By: fdelsing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/09 20:22:05 by fdelsing          #+#    #+#             */
-/*   Updated: 2018/02/19 10:59:23 by fdelsing         ###   ########.fr       */
+/*   Updated: 2018/02/20 14:15:34 by fdelsing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,19 +39,21 @@ void	ft_init_ctx(t_param *p)
 	p->img.img = mlx_new_image(p->mlx, WIN_X, WIN_Y);
 	p->img.data_img = (int*)mlx_get_data_addr(p->img.img,
 			&p->img.bpp, &p->img.s_l, &p->img.endian);
+	p->img.color = 0x0000ff;
 }
 
 void	ft_init_angles(t_param *p)
 {
 	p->pi = acos(0) * 2;
-	p->rad_x = p->pi / 2;
-	p->rad_y = p->rad_x;
-//	p->rad_z = 0;
+	p->rad_x = 0;
+	p->rad_y = p->pi;
+	p->rad_z = p->pi;
 	p->sin_x = sin(p->rad_x);
 	p->sin_y = sin(p->rad_y);
 	p->cos_x = cos(p->rad_x);
 	p->cos_y = cos(p->rad_y);
 	p->sin_z = 0;
+	p->cos_z = 0;
 }
 
 int		ft_keyhook(int keycode, t_param *p)
@@ -68,27 +70,10 @@ int		ft_keyhook(int keycode, t_param *p)
 	if (keycode == 269 || keycode == 262)
 		ft_depth(keycode, p);
 	if (keycode == 71)
-	{
 		ft_init_angles(p);
-//		reset(keycode, p);
-	}
 	ft_fill_img(p);
 	return (0);
 }
-
-/*int		ft_mousehook(int button, int x, int y, t_param *p)
-{
-	int i;
-
-	i = 0;
-	if (button == 1)
-	{
-		if (x < 1000 && y < 500)
-			printf("dans le haut\n");
-		printf("HELLO\n");
-	}
-	return (0);
-}*/
 
 int		main(int argc, char **argv)
 {
@@ -100,7 +85,6 @@ int		main(int argc, char **argv)
 	ft_check_error(&p, argv, argc);
 	ft_init_ctx(&p);
 	ft_init_angles(&p);
-//	printf("len_x = %d, len_y = %d\n", p.len_x, p.len_y);
 	////////////////// print map //////////////////////
 	y = -1;
 	while (++y < p.len_y)
@@ -113,7 +97,6 @@ int		main(int argc, char **argv)
 	//////////////// fill img ///////////////////////
 	ft_fill_img(&p);
 	mlx_hook(p.win, 2, 1L << 8, ft_keyhook, &p);
-//	mlx_hook(p.win, 4, 1L<<8, ft_mousehook, &p);
 	mlx_loop(p.mlx);
 	return (0);
 }

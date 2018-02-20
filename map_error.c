@@ -6,7 +6,7 @@
 /*   By: fdelsing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/13 17:28:58 by fdelsing          #+#    #+#             */
-/*   Updated: 2018/02/13 03:55:52 by fdelsing         ###   ########.fr       */
+/*   Updated: 2018/02/20 14:15:32 by fdelsing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <stdlib.h>
 #include <fcntl.h>
 
-void	ft_exit()
+void	ft_exit(void)
 {
 	exit(0);
 }
@@ -127,13 +127,13 @@ void		ft_check_error(t_param *p, char **argv, int argc)
 		p->len_x = ft_mapsize_x(p->temp[x - 1]);
 		while (--x > 0)
 		{
-			if (p->len_x != ft_mapsize_x(p->temp[x-1]))
+			if (p->len_x != ft_mapsize_x(p->temp[x - 1]))
 			{
 				ft_putendl("ERROR");
 				ft_exit();
 			}
 		}
-	close(fd);
+		close(fd);
 	}
 	else
 	{
@@ -141,4 +141,3 @@ void		ft_check_error(t_param *p, char **argv, int argc)
 		ft_exit();
 	}
 }
-

@@ -6,7 +6,7 @@
 /*   By: fdelsing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/08 00:00:46 by fdelsing          #+#    #+#             */
-/*   Updated: 2018/02/19 11:04:30 by fdelsing         ###   ########.fr       */
+/*   Updated: 2018/02/20 13:56:34 by fdelsing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,26 +82,23 @@ int		ft_translation(int keycode, t_param *p)
 
 int		ft_rotations(int keycode, t_param *p)
 {
-	if (keycode == 83) // rotate axe x
+	if (keycode == 83) // rotate axe y
 	{
-		p->rad_x += 0.4 / p->pi;
+		p->rad_x += 0.4/p->pi;
 		p->sin_x = sin(p->rad_x);
 		p->cos_x = cos(p->rad_x);
 	}
-	if (keycode == 84) //rotate axe y
+	if (keycode == 84) //rotate axe x
 	{	
-		p->rad_y += 0.4 / p->pi;
+		p->rad_y += 0.4/p->pi;
 		p->sin_y = sin(p->rad_y);
 		p->cos_y = cos(p->rad_y);
-//		p->cos_x = cos(p->rad_x);
 	}
 	if (keycode == 85) // rotate z
 	{
-		p->rad_z += 0.2/p->pi;
+		p->rad_z = p->pi + p->pi/3;
 		p->sin_z = sin(p->rad_z); // appliquer sur y ;
 		p->cos_z = cos(p->rad_z);
 	}
-	printf("sin_x = %f, sin_y = %f, sin_z = %f\n, cos_x = %f, cos_y = %f, cos_z = %f\n",
-			p->sin_x, p->sin_y, p->sin_z, p->cos_x, p->cos_y, p->cos_z);
 	return (0);
 }

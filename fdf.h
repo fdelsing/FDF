@@ -6,7 +6,7 @@
 /*   By: fdelsing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/10 17:48:26 by fdelsing          #+#    #+#             */
-/*   Updated: 2018/02/19 10:25:57 by fdelsing         ###   ########.fr       */
+/*   Updated: 2018/02/20 14:02:01 by fdelsing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_img
 	int		endian;
 	void	*img;
 	int		*data_img;
+	int		color;
 }				t_img;
 
 typedef	struct	s_param
@@ -66,8 +67,8 @@ typedef	struct	s_param
 	float	cos_y;
 	float	cos_z;
 	t_img	img;
-	t_point	A;
-	t_point B;
+	t_point	a;
+	t_point b;
 }				t_param;
 
 typedef struct	s_var
@@ -94,4 +95,14 @@ int		ft_translation(int keycode, t_param *p);
 int		ft_rotations(int keycode, t_param *p);
 int		ft_zoom(int keycode, t_param *p);
 int		ft_depth(int keycode, t_param *p);
+
+
+void	fill_img(int *add, int i, int j, t_param *p);
+void	ft_adapt_coord(t_point *a, t_point *b, t_param *p);
+void	ft_fill_img(t_param *p);
+
+void	ft_trace_vertical(t_point a, t_point b, t_param *p);
+void	ft_trace_horizontal(t_point a, t_point b, t_param *p);
+void	ft_trace_diag_x(float delta, t_point a, t_point b, t_param *p, float x);
+void	ft_trace(t_point a, t_point b, t_param *p);
 #endif
