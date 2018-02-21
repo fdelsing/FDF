@@ -6,20 +6,13 @@
 /*   By: fdelsing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/08 00:00:46 by fdelsing          #+#    #+#             */
-/*   Updated: 2018/02/20 13:56:34 by fdelsing         ###   ########.fr       */
+/*   Updated: 2018/02/21 14:14:36 by fdelsing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int		reset(int keycode, t_param *p)
-{
-	ft_init_ctx(p);
-	ft_init_angles(p);
-	return (0);
-}
-
-int		ft_depth(int keycode, t_param *p)
+void	deeper(t_param *p)
 {
 	int y;
 	int x;
@@ -30,43 +23,55 @@ int		ft_depth(int keycode, t_param *p)
 		x = 0;
 		while(x < p->len_x)
 		{
-			if (keycode == 269)
-			{
-				if (p->map[y][x] > 0)
-					p->map[y][x] += 5;
-				else if (p->map[y][x] < 0)
-					p->map[y][x] -= 5;
-			}
-			else if (keycode == 262)
-			{
-				if (p->map[y][x] > 0 && p->map[y][x] - 5 > 0)
-					p->map[y][x] -= 5;
-				else if (p->map[y][x] < 0 && p->map[y][x] + 5 < 0)
-					p->map[y][x] += 5;
-			}
+			if (p->map[y][x] > 0)
+				p->map[y][x] += zm;
+			else if (p->map[y][x] < 0)
+				p->map[y][x] -= zm;
 			x++;
 		}
 		y++;
 	}
-	return (0);
 }
 
-int		ft_zoom(int keycode, t_param *p)
+void	flatter(t_param *p)
 {
-	if (keycode == 24) //////// zoom
+	int y;
+	int x;
+
+	y = 0;
+	while (y < p->len_y)
 	{
-		p->space_x += 5;
-		p->space_y += 5;
+		x = 0;
+		while(x < p->len_x)
+		{
+				if (p->map[y][x] > 0 && p->map[y][x] - zm > 0)
+					p->map[y][x] -= zm;
+				else if (p->map[y][x] < 0 && p->map[y][x] + zm < 0)
+					p->map[y][x] += zm;
+			x++;
+		}
+		y++;
 	}
-	if (keycode == 27) //////// zoom
+}
+
+int		zoom(int keycode, t_param *p)
+{
+	if (keycode == 24)
 	{
-		p->space_x -= 5;
-		p->space_y -= 5;
+		p->space_x += zm;
+		p->space_y += zm;
+		deeper(p);
+	}
+	if (keycode == 27 && p->space_x - zm > 0 && p->space_y - zm > 0)
+	{
+		p->space_x -= zm;
+		p->space_y -= zm;
+		flatter(p);
 	}
 	return (0);
 }
 
-int		ft_translation(int keycode, t_param *p)
+int		translation(int keycode, t_param *p)
 {
 	if (keycode == 124)
 		p->c_x += 10;
@@ -76,29 +81,28 @@ int		ft_translation(int keycode, t_param *p)
 		p->c_y -= 10;
 	if (keycode == 125)
 		p->c_y += 10;
-	ft_fill_img(p);
 	return (0);
 }
 
-int		ft_rotations(int keycode, t_param *p)
+int		rotations(int keycode, t_param *p)
 {
 	if (keycode == 83) // rotate axe y
 	{
-		p->rad_x += 0.4/p->pi;
-		p->sin_x = sin(p->rad_x);
-		p->cos_x = cos(p->rad_x);
+		p->f.rad_x += 0.4/p->f.pi;
+		p->f.sin_x = sin(p->f.rad_x);
+		p->f.cos_x = cos(p->f.rad_x);
 	}
 	if (keycode == 84) //rotate axe x
 	{	
-		p->rad_y += 0.4/p->pi;
-		p->sin_y = sin(p->rad_y);
-		p->cos_y = cos(p->rad_y);
+		p->f.rad_y += 0.4/p->f.pi;
+		p->f.sin_y = sin(p->f.rad_y);
+		p->f.cos_y = cos(p->f.rad_y);
 	}
 	if (keycode == 85) // rotate z
 	{
-		p->rad_z = p->pi + p->pi/3;
-		p->sin_z = sin(p->rad_z); // appliquer sur y ;
-		p->cos_z = cos(p->rad_z);
+		p->f.rad_z = p->f.pi + p->f.pi/3;
+		p->f.sin_z = sin(p->f.rad_z); // appliquer sur y ;
+		p->f.cos_z = cos(p->f.rad_z);
 	}
 	return (0);
 }

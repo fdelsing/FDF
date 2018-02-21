@@ -6,7 +6,7 @@
 /*   By: fdelsing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/09 20:22:05 by fdelsing          #+#    #+#             */
-/*   Updated: 2018/02/20 14:15:34 by fdelsing         ###   ########.fr       */
+/*   Updated: 2018/02/21 14:14:34 by fdelsing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,16 @@
 #include <fcntl.h>
 #include <float.h>
 
-void	ft_init_ctx(t_param *p)
+void	exit_program(t_param *p)
 {
-	p->map = ft_map(&*p);
-	ft_free_ctab(p->temp);
+	ft_putendl("You have successfully exited the program");
+	free_itab(p->map, p->len_y);
+	free_ctab(p->temp);
+	exit(0);
+}
+
+void	init_ctx(t_param *p)
+{
 	if (p->len_x % 2 != 0)
 		p->c_x = ((WIN_X - p->len_x) / 2) + 1;
 	else
@@ -30,8 +36,6 @@ void	ft_init_ctx(t_param *p)
 		p->c_y = ((WIN_Y - p->len_y) / 2) + 1;
 	else
 		p->c_y = (WIN_Y - p->len_y) / 2;
-	p->space_x = 10;
-	p->space_y = 10;
 	p->o_x = ((float)p->len_x - 1) / 2;
 	p->o_y = ((float)p->len_y - 1) / 2;
 	p->mlx = mlx_init();
@@ -39,39 +43,47 @@ void	ft_init_ctx(t_param *p)
 	p->img.img = mlx_new_image(p->mlx, WIN_X, WIN_Y);
 	p->img.data_img = (int*)mlx_get_data_addr(p->img.img,
 			&p->img.bpp, &p->img.s_l, &p->img.endian);
-	p->img.color = 0x0000ff;
 }
 
-void	ft_init_angles(t_param *p)
+void	init_image_tools(t_param *p)
 {
-	p->pi = acos(0) * 2;
-	p->rad_x = 0;
-	p->rad_y = p->pi;
-	p->rad_z = p->pi;
-	p->sin_x = sin(p->rad_x);
-	p->sin_y = sin(p->rad_y);
-	p->cos_x = cos(p->rad_x);
-	p->cos_y = cos(p->rad_y);
-	p->sin_z = 0;
-	p->cos_z = 0;
+	p->map = map(&*p);
+	p->space_x = 10;
+	p->space_y = 10;
+	//0xff ff ff
+	//0x255 255 255
+	p->img.color = 16777216;
+	p->f.pi = acos(0) * 2;
+	p->f.rad_x = 0;
+	p->f.rad_y = p->f.pi;
+	p->f.rad_z = p->f.pi;
+	p->f.sin_x = sin(p->f.rad_x);
+	p->f.sin_y = sin(p->f.rad_y);
+	p->f.cos_x = cos(p->f.rad_x);
+	p->f.cos_y = cos(p->f.rad_y);
+	p->f.sin_z = 0;
+	p->f.cos_z = 0;
 }
 
 int		ft_keyhook(int keycode, t_param *p)
 {
 	ft_bzero((char*)p->img.data_img, (WIN_Y * WIN_X) * 4);
 	if (keycode == 53)
-		exit(0);
+		exit_program(p);
 	if (keycode >= 123 && keycode <= 126)
-		ft_translation(keycode, p);
+		translation(keycode, p);
 	if (keycode >= 83 && keycode <= 85)
-		ft_rotations(keycode, p);
+		rotations(keycode, p);
 	if (keycode == 24 || keycode == 27)
-		ft_zoom(keycode, p);
-	if (keycode == 269 || keycode == 262)
-		ft_depth(keycode, p);
+		zoom(keycode, p);
+//	if (keycode == 269 || keycode == 262)
+//		depth(keycode, p);
 	if (keycode == 71)
-		ft_init_angles(p);
-	ft_fill_img(p);
+	{
+		free_itab(p->map, p->len_y);
+		init_image_tools(p);
+	}
+	fill_img(p);
 	return (0);
 }
 
@@ -82,9 +94,9 @@ int		main(int argc, char **argv)
 	int		x;
 	int		y;
 
-	ft_check_error(&p, argv, argc);
-	ft_init_ctx(&p);
-	ft_init_angles(&p);
+	check_error(&p, argv, argc);
+	init_ctx(&p);
+	init_image_tools(&p);
 	////////////////// print map //////////////////////
 	y = -1;
 	while (++y < p.len_y)
@@ -95,7 +107,7 @@ int		main(int argc, char **argv)
 		printf("\n");
 	}
 	//////////////// fill img ///////////////////////
-	ft_fill_img(&p);
+	fill_img(&p);
 	mlx_hook(p.win, 2, 1L << 8, ft_keyhook, &p);
 	mlx_loop(p.mlx);
 	return (0);

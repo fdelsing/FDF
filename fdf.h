@@ -6,7 +6,7 @@
 /*   By: fdelsing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/10 17:48:26 by fdelsing          #+#    #+#             */
-/*   Updated: 2018/02/20 14:02:01 by fdelsing         ###   ########.fr       */
+/*   Updated: 2018/02/21 13:49:49 by fdelsing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,29 @@
 
 # define WIN_X 2500
 # define WIN_Y 1200
-# define VAR(z)	z = p->map[x][y]
+# define zm 3
+
+typedef struct	s_float
+{
+	float	pi;
+	float	rad_x;
+	float	rad_y;
+	float	rad_z;
+	float	sin_x;
+	float	sin_y;
+	float	sin_z;
+	float	cos_x;
+	float	cos_y;
+	float	cos_z;
+}				t_float;
 
 typedef struct	s_point
 {
-	int x;
-	int y;
+	int		x;
+	int		y;
 }				t_point;
 
-typedef struct s_img
+typedef struct	s_img
 {
 	int		bpp;
 	int		s_l;
@@ -44,7 +58,7 @@ typedef	struct	s_param
 {
 	void	*mlx;
 	void	*win;
-	int 	**map;
+	int		**map;
 	char	**temp;
 	int		len_y;
 	int		len_x;
@@ -54,18 +68,7 @@ typedef	struct	s_param
 	int		c_y;
 	int		space_x;
 	int		space_y;
-
-//	t_delta	delta;	
-	float	pi;
-	float	rad_x;
-	float	rad_y;
-	float	rad_z;
-	float	sin_x;
-	float	sin_y;
-	float	sin_z;
-	float	cos_x;
-	float	cos_y;
-	float	cos_z;
+	t_float	f;
 	t_img	img;
 	t_point	a;
 	t_point b;
@@ -78,31 +81,32 @@ typedef struct	s_var
 	int color;
 }				t_var;
 
-void	ft_exit();
-void	ft_check_error(t_param *p, char **argv, int argc);
-void	ft_init_ctx(t_param *p);
-void	ft_init_angles(t_param *p);
-void	ft_free_ctab(char **s);
-void	ft_free_itab(int **tab, int tablen);
-void	ft_fill_img(t_param *p);
+void			exit_program(t_param *p);
+void			init_ctx(t_param *p);
+void			init_image_tools(t_param *p);
+int				ft_keyhook(int keycode, t_param *p);
 
-int		ft_mapsize_y(char **argv);
-int		ft_count_nbr(char *s);
-int		**ft_map(t_param *p);
+void			free_ctab(char **s);
+void			free_itab(int **tab, int tablen);
 
-int		ft_escape_programm(int keycode, t_param *p);
-int		ft_translation(int keycode, t_param *p);
-int		ft_rotations(int keycode, t_param *p);
-int		ft_zoom(int keycode, t_param *p);
-int		ft_depth(int keycode, t_param *p);
+void			crash(int i);
+int				mapsize_y(char **argv);
+int				mapsize_x(char *s);
+int				**map(t_param *p);
+void			check_error(t_param *p, char **argv, int argc);
 
+int				translation(int keycode, t_param *p);
+int				rotations(int keycode, t_param *p);
+int				zoom(int keycode, t_param *p);
+int				depth(int keycode, t_param *p);
 
-void	fill_img(int *add, int i, int j, t_param *p);
-void	ft_adapt_coord(t_point *a, t_point *b, t_param *p);
-void	ft_fill_img(t_param *p);
+void			put_pixel(int *add, int i, int j, t_param *p);
+void			adapt_rot_z(t_point *a, t_point *b, t_param *p);
+void			adapt_coord(t_point *a, t_point *b, t_param *p);
+void			fill_img(t_param *p);
 
-void	ft_trace_vertical(t_point a, t_point b, t_param *p);
-void	ft_trace_horizontal(t_point a, t_point b, t_param *p);
-void	ft_trace_diag_x(float delta, t_point a, t_point b, t_param *p, float x);
-void	ft_trace(t_point a, t_point b, t_param *p);
+void			trace(t_point a, t_point b, t_param *p);
+void			trace_vertical(t_point a, t_point b, t_param *p);
+void			trace_horizontal(t_point a, t_point b, t_param *p);
+void			trace_diag_x(float delta, t_point a, t_point b, t_param *p);
 #endif

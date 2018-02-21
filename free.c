@@ -6,7 +6,7 @@
 /*   By: fdelsing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/13 19:32:18 by fdelsing          #+#    #+#             */
-/*   Updated: 2018/01/16 10:41:00 by fdelsing         ###   ########.fr       */
+/*   Updated: 2018/02/21 10:35:26 by fdelsing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <stdlib.h>
 #include <fcntl.h>
 
-void	ft_free_itab(int **tab, int tablen)
+void	free_itab(int **tab, int tablen)
 {
 	int i;
 
@@ -27,7 +27,7 @@ void	ft_free_itab(int **tab, int tablen)
 	free(tab);
 }
 
-void	ft_free_ctab(char **s)
+void	free_ctab(char **s)
 {
 	int i;
 
