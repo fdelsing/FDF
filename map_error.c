@@ -6,7 +6,7 @@
 /*   By: fdelsing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/13 17:28:58 by fdelsing          #+#    #+#             */
-/*   Updated: 2018/02/21 14:14:38 by fdelsing         ###   ########.fr       */
+/*   Updated: 2018/02/26 19:21:29 by fdelsing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int		mapsize_y(char **argv)
 	{
 		i = -1;
 		while (line[++i])
-			if (ft_isdigit(line[i]) != 1 && line[i] != ' ')
+			if (ft_isdigit(line[i]) != 1 && line[i] != ' ' && line[i] != '-')
 				crash(1);
 		free(line);
 		y++;
@@ -53,7 +53,7 @@ int		mapsize_y(char **argv)
 
 int		mapsize_x(char *s)
 {
-	int i;
+	size_t i;
 	int count;
 
 	i = -1;
@@ -96,7 +96,6 @@ void	check_error(t_param *p, char **argv, int argc)
 {
 	int		fd;
 	int		x;
-	int		xsize;
 
 	if (argc != 2)
 		crash(2);

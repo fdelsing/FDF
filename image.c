@@ -6,7 +6,7 @@
 /*   By: fdelsing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/16 10:40:07 by fdelsing          #+#    #+#             */
-/*   Updated: 2018/02/21 13:44:45 by fdelsing         ###   ########.fr       */
+/*   Updated: 2018/02/26 19:05:42 by fdelsing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,7 @@ void	put_pixel(int *add, int i, int j, t_param *p)
 	if (j >= 0 && j < WIN_Y && i >= 0 && i <= WIN_X)
 		add[(j * WIN_X) + i] = p->img.color;
 }
-/*
-int		color()
-{
-	int color;
-	int r;
-	int g;
-	int b;
 
-	r = 	
-	return(color);
-}
-*/
 void	adapt_rot_z(t_point *a, t_point *b, t_param *p)
 {
 	float depth_z;

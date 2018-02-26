@@ -6,14 +6,16 @@
 #    By: fdelsing <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/10 18:05:53 by fdelsing          #+#    #+#              #
-#    Updated: 2018/02/20 14:03:13 by fdelsing         ###   ########.fr        #
+#    Updated: 2018/02/26 16:23:12 by fdelsing         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fdf
 
 CC = gcc
-CFLAGS = -lmlx -framework OpenGL -framework Appkit
+CFLAGS = -Wall -Werror -Wextra 
+FLAGS = -lmlx -framework OpenGL -framework Appkit
+
 
 SRC = main.c	map_error.c		free.c		image.c		move.c		trace.c
 
@@ -22,25 +24,25 @@ OBJ = $(SRC:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	cd ./Libft $(MAKE)
-	$(CC) -o $(NAME) -L./Libft/ -lft $(CFLAGS) $(OBJ) 
+	$(MAKE) -C ./libft
+	$(CC) -o $(NAME) -L./libft/ -lft $(FLAGS) $(OBJ) 
 
 clean:
-	cd ./Libft $(MAKE) clean
+	$(MAKE) clean -C ./libft
 	rm -rf $(OBJ)
 
 fclean: clean
-	cd ./Libft $(MAKE) fclean
+	$(MAKE) fclean -C ./libft
 	rm -f $(NAME)
 
 re: 
-	cd ./libft $(MAKE) re
+	$(MAKE) re -C ./libft
 	fclean all
 
 ################################################################################
 
 fsanitize : $(OBJ)
-	cd ./Libft $(MAKE)
-	$(CC) -g -fsanitize=address -o $(NAME) -L./Libft/ -lft $(CFLAGS) $(OBJ) 
+	cd ./libft $(MAKE)
+	$(CC) -g -fsanitize=address -o $(NAME) -L./libft/ -lft $(CFLAGS) $(OBJ) 
 
 

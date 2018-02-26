@@ -6,17 +6,11 @@
 /*   By: fdelsing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/09 20:22:05 by fdelsing          #+#    #+#             */
-/*   Updated: 2018/02/21 14:14:34 by fdelsing         ###   ########.fr       */
+/*   Updated: 2018/02/26 19:32:02 by fdelsing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./Libft/libft.h"
 #include "fdf.h"
-#include <mlx.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <fcntl.h>
-#include <float.h>
 
 void	exit_program(t_param *p)
 {
@@ -50,9 +44,8 @@ void	init_image_tools(t_param *p)
 	p->map = map(&*p);
 	p->space_x = 10;
 	p->space_y = 10;
-	//0xff ff ff
-	//0x255 255 255
-	p->img.color = 16777216;
+	p->img.color = 0xffffff;// 0xffffff - 0xff0000;//0xffffff - 0xffff00;
+
 	p->f.pi = acos(0) * 2;
 	p->f.rad_x = 0;
 	p->f.rad_y = p->f.pi;
@@ -76,8 +69,6 @@ int		ft_keyhook(int keycode, t_param *p)
 		rotations(keycode, p);
 	if (keycode == 24 || keycode == 27)
 		zoom(keycode, p);
-//	if (keycode == 269 || keycode == 262)
-//		depth(keycode, p);
 	if (keycode == 71)
 	{
 		free_itab(p->map, p->len_y);
@@ -90,7 +81,6 @@ int		ft_keyhook(int keycode, t_param *p)
 int		main(int argc, char **argv)
 {
 	t_param	p;
-	t_img	img;
 	int		x;
 	int		y;
 

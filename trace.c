@@ -6,7 +6,7 @@
 /*   By: fdelsing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 13:56:45 by fdelsing          #+#    #+#             */
-/*   Updated: 2018/02/21 12:54:04 by fdelsing         ###   ########.fr       */
+/*   Updated: 2018/02/26 19:31:35 by fdelsing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,37 @@ void	trace_diag_x(float delta, t_point a, t_point b, t_param *p)
 	}
 	if (b.x < a.x)
 	{
-		delta = -delta;
 		while ((int)(a.x - i) >= b.x)
 		{
-			j = (int)(delta * i);
+			j = (int)(-delta * i);
 			put_pixel(p->img.data_img, a.x - i, (int)(j + a.y), p);
 			i++;
+		}
+	}
+}
+
+void	trace_diag_y(float delta, t_point a, t_point b, t_param *p)
+{
+	int i;
+	int j;
+
+	j = 0;
+	if (a.y < b.y)
+	{
+		while ((int)(j + a.y) <= b.y)
+		{
+			i = (int)(delta * j);
+			put_pixel(p->img.data_img, i + a.x, (int)(j + a.y), p);
+			j++;
+		}
+	}
+	if (a.y > b.y)
+	{
+		while ((int)(b.y + j) <= a.y)
+		{
+			i = (int)(delta * j);
+			put_pixel(p->img.data_img, b.x + i, (int)(b.y + j), p);
+			j++;
 		}
 	}
 }
@@ -96,7 +121,15 @@ void	trace(t_point a, t_point b, t_param *p)
 		trace_horizontal(a, b, p);
 	if (x != 0 && y != 0)
 	{
-		delta = (y / x);
-		trace_diag_x(delta, a, b, p);
+		if (ft_abs(x) < ft_abs(y))
+		{
+			delta = (x / y);
+			trace_diag_y(delta, a, b, p);
+		}
+		else
+		{
+			delta = (y / x);
+			trace_diag_x(delta, a, b, p);
+		}
 	}
 }

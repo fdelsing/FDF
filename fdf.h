@@ -6,14 +6,15 @@
 /*   By: fdelsing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/10 17:48:26 by fdelsing          #+#    #+#             */
-/*   Updated: 2018/02/21 13:49:49 by fdelsing         ###   ########.fr       */
+/*   Updated: 2018/02/26 19:10:26 by fdelsing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 
-# include "./Libft/libft.h"
+# include "./libft/includes/libft.h"
+# include "./libft/includes/get_next_line.h"
 # include <mlx.h>
 # include <stdio.h>
 # include <stdlib.h>
