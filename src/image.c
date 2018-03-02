@@ -6,7 +6,7 @@
 /*   By: fdelsing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/16 10:40:07 by fdelsing          #+#    #+#             */
-/*   Updated: 2018/03/02 18:35:30 by fdelsing         ###   ########.fr       */
+/*   Updated: 2018/03/02 19:20:43 by fdelsing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void	put_pixel(int *add, int i, int j, t_param *p)
 
 void	adapt_rot_z(t_point *a, t_point *b, t_param *p)
 {
-	float depth_z;
-	int buf;
+	float	depth_z;
+	int		buf;
 
 	depth_z = p->map[p->a.y][p->a.x] * p->f.cos_z;
 	buf = a->x;
@@ -65,11 +65,11 @@ void	fill_img(t_param *p)
 		{
 			p->b.x = p->a.x + 1;
 			p->b.y = p->a.y;
-			if (p->b.x < p->len_x && p->b.y < p->len_y)// trace horizontal
+			if (p->b.x < p->len_x && p->b.y < p->len_y)
 				trace(p->a, p->b, p);
 			p->b.x = p->a.x;
 			p->b.y = p->a.y + 1;
-			if (p->b.y < p->len_y)// trace vertical
+			if (p->b.y < p->len_y)
 				trace(p->a, p->b, p);
 			p->a.x++;
 		}

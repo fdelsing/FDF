@@ -6,7 +6,7 @@
 /*   By: fdelsing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/13 17:28:58 by fdelsing          #+#    #+#             */
-/*   Updated: 2018/03/02 18:35:58 by fdelsing         ###   ########.fr       */
+/*   Updated: 2018/03/02 19:18:58 by fdelsing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ int		mapsize_y(char **argv)
 
 int		mapsize_x(char *s)
 {
-	size_t i;
-	int count;
+	size_t	i;
+	int		count;
 
 	i = -1;
 	count = 0;

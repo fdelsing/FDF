@@ -6,7 +6,7 @@
 /*   By: fdelsing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/09 20:22:05 by fdelsing          #+#    #+#             */
-/*   Updated: 2018/03/02 18:56:44 by fdelsing         ###   ########.fr       */
+/*   Updated: 2018/03/02 19:17:22 by fdelsing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,7 @@ void	init_image_tools(t_param *p)
 	p->map = map(&*p);
 	p->space_x = 10;
 	p->space_y = 10;
-	p->img.color = 0xffffff;// 0xffffff - 0xff0000;//0xffffff - 0xffff00;
-
+	p->img.color = 0xffffff;
 	p->f.pi = acos(0) * 2;
 	p->f.rad_x = 0;
 	p->f.rad_y = p->f.pi;
