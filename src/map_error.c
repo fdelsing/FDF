@@ -6,11 +6,11 @@
 /*   By: fdelsing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/13 17:28:58 by fdelsing          #+#    #+#             */
-/*   Updated: 2018/02/26 19:21:29 by fdelsing         ###   ########.fr       */
+/*   Updated: 2018/03/02 18:35:58 by fdelsing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include <fdf.h>
 
 void	crash(int i)
 {
@@ -33,7 +33,7 @@ int		mapsize_y(char **argv)
 
 	y = 0;
 	fd = open(argv[1], O_RDONLY);
-	gnl = get_next_line(fd, &line);
+	gnl = ft_get_next_line(fd, &line);
 	if (gnl == -1)
 		crash(0);
 	while (gnl == 1)
@@ -44,7 +44,7 @@ int		mapsize_y(char **argv)
 				crash(1);
 		free(line);
 		y++;
-		gnl = get_next_line(fd, &line);
+		gnl = ft_get_next_line(fd, &line);
 	}
 	free(line);
 	close(fd);
@@ -106,7 +106,7 @@ void	check_error(t_param *p, char **argv, int argc)
 		crash(0);
 	fd = open(argv[1], O_RDONLY);
 	x = 0;
-	while (get_next_line(fd, &(p->temp[x])) == 1)
+	while (ft_get_next_line(fd, &(p->temp[x])) == 1)
 		x++;
 	free(p->temp[x]);
 	p->temp[p->len_y] = 0;

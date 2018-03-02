@@ -6,11 +6,11 @@
 /*   By: fdelsing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/16 10:40:07 by fdelsing          #+#    #+#             */
-/*   Updated: 2018/02/26 19:05:42 by fdelsing         ###   ########.fr       */
+/*   Updated: 2018/03/02 18:35:30 by fdelsing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include <fdf.h>
 
 void	put_pixel(int *add, int i, int j, t_param *p)
 {

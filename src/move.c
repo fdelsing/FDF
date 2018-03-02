@@ -6,11 +6,11 @@
 /*   By: fdelsing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/08 00:00:46 by fdelsing          #+#    #+#             */
-/*   Updated: 2018/02/26 19:21:46 by fdelsing         ###   ########.fr       */
+/*   Updated: 2018/03/02 18:33:26 by fdelsing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include <fdf.h>
 
 void	deeper(t_param *p)
 {
@@ -24,9 +24,9 @@ void	deeper(t_param *p)
 		while(x < p->len_x)
 		{
 			if (p->map[y][x] > 0)
-				p->map[y][x] += zm;
+				p->map[y][x] += ZM;
 			else if (p->map[y][x] < 0)
-				p->map[y][x] -= zm;
+				p->map[y][x] -= ZM;
 			x++;
 		}
 		y++;
@@ -44,10 +44,10 @@ void	flatter(t_param *p)
 		x = 0;
 		while(x < p->len_x)
 		{
-				if (p->map[y][x] > 0 && p->map[y][x] - zm > 0)
-					p->map[y][x] -= zm;
-				else if (p->map[y][x] < 0 && p->map[y][x] + zm < 0)
-					p->map[y][x] += zm;
+				if (p->map[y][x] > 0 && p->map[y][x] - ZM > 0)
+					p->map[y][x] -= ZM;
+				else if (p->map[y][x] < 0 && p->map[y][x] + ZM < 0)
+					p->map[y][x] += ZM;
 			x++;
 		}
 		y++;
@@ -58,14 +58,14 @@ int		zoom(int keycode, t_param *p)
 {
 	if (keycode == 24)
 	{
-		p->space_x += zm;
-		p->space_y += zm;
+		p->space_x += ZM;
+		p->space_y += ZM;
 		deeper(p);
 	}
-	if (keycode == 27 && p->space_x - zm > 0 && p->space_y - zm > 0)
+	if (keycode == 27 && p->space_x - ZM > 0 && p->space_y - ZM > 0)
 	{
-		p->space_x -= zm;
-		p->space_y -= zm;
+		p->space_x -= ZM;
+		p->space_y -= ZM;
 		flatter(p);
 	}
 	return (0);

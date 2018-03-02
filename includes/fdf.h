@@ -6,24 +6,23 @@
 /*   By: fdelsing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/10 17:48:26 by fdelsing          #+#    #+#             */
-/*   Updated: 2018/02/26 19:10:26 by fdelsing         ###   ########.fr       */
+/*   Updated: 2018/03/02 18:33:48 by fdelsing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 
-# include "./libft/includes/libft.h"
-# include "./libft/includes/get_next_line.h"
+# include <libft.h>
 # include <mlx.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <fcntl.h>
 # include <math.h>
 
-# define WIN_X 2500
-# define WIN_Y 1200
-# define zm 3
+# define WIN_X	2500
+# define WIN_Y	1200
+# define ZM		3
 
 typedef struct	s_float
 {

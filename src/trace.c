@@ -6,11 +6,11 @@
 /*   By: fdelsing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 13:56:45 by fdelsing          #+#    #+#             */
-/*   Updated: 2018/02/26 19:31:35 by fdelsing         ###   ########.fr       */
+/*   Updated: 2018/03/02 18:36:10 by fdelsing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include <fdf.h>
 
 void	trace_vertical(t_point a, t_point b, t_param *p)
 {

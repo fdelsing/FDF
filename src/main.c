@@ -6,17 +6,17 @@
 /*   By: fdelsing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/09 20:22:05 by fdelsing          #+#    #+#             */
-/*   Updated: 2018/02/26 19:32:02 by fdelsing         ###   ########.fr       */
+/*   Updated: 2018/03/02 18:56:44 by fdelsing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include <fdf.h>
 
 void	exit_program(t_param *p)
 {
-	ft_putendl("You have successfully exited the program");
 	free_itab(p->map, p->len_y);
 	free_ctab(p->temp);
+	ft_putendl("You have successfully exited the program");
 	exit(0);
 }
 
@@ -81,22 +81,10 @@ int		ft_keyhook(int keycode, t_param *p)
 int		main(int argc, char **argv)
 {
 	t_param	p;
-	int		x;
-	int		y;
 
 	check_error(&p, argv, argc);
 	init_ctx(&p);
 	init_image_tools(&p);
-	////////////////// print map //////////////////////
-	y = -1;
-	while (++y < p.len_y)
-	{
-		x = -1;
-		while (++x < p.len_x)
-			printf("%d ", p.map[y][x]);
-		printf("\n");
-	}
-	//////////////// fill img ///////////////////////
 	fill_img(&p);
 	mlx_hook(p.win, 2, 1L << 8, ft_keyhook, &p);
 	mlx_loop(p.mlx);
