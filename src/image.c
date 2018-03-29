@@ -6,18 +6,37 @@
 /*   By: fdelsing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/16 10:40:07 by fdelsing          #+#    #+#             */
-/*   Updated: 2018/03/02 19:20:43 by fdelsing         ###   ########.fr       */
+/*   Updated: 2018/03/29 20:17:47 by fdelsing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fdf.h>
+
+void	color(t_param *p)
+{
+	if (p->img.color.rgba.b == 0)
+	{
+		p->img.color.rgba.r -= 0x5;
+		p->img.color.rgba.g += 0x5;
+	}
+	if (p->img.color.rgba.r == 0)
+	{
+		p->img.color.rgba.g -= 0x5;
+		p->img.color.rgba.b += 0x5;
+	}
+	if (p->img.color.rgba.g == 0)
+	{
+		p->img.color.rgba.b -= 0x5;
+		p->img.color.rgba.r += 0x5;
+	}
+}
 
 void	put_pixel(int *add, int i, int j, t_param *p)
 {
 	i += p->c_x;
 	j += p->c_y;
 	if (j >= 0 && j < WIN_Y && i >= 0 && i <= WIN_X)
-		add[(j * WIN_X) + i] = p->img.color;
+		add[(j * WIN_X) + i] = p->img.color.hex;
 }
 
 void	adapt_rot_z(t_point *a, t_point *b, t_param *p)

@@ -6,7 +6,7 @@
 /*   By: fdelsing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/10 17:48:26 by fdelsing          #+#    #+#             */
-/*   Updated: 2018/03/02 18:33:48 by fdelsing         ###   ########.fr       */
+/*   Updated: 2018/03/29 20:04:28 by fdelsing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <math.h>
+# include <s_color.h>
 
 # define WIN_X	2500
 # define WIN_Y	1200
@@ -46,12 +47,12 @@ typedef struct	s_point
 
 typedef struct	s_img
 {
-	int		bpp;
-	int		s_l;
-	int		endian;
-	void	*img;
-	int		*data_img;
-	int		color;
+	int			bpp;
+	int			s_l;
+	int			endian;
+	void		*img;
+	int			*data_img;
+	t_color		color;
 }				t_img;
 
 typedef	struct	s_param
@@ -100,6 +101,7 @@ int				rotations(int keycode, t_param *p);
 int				zoom(int keycode, t_param *p);
 int				depth(int keycode, t_param *p);
 
+void			color(t_param *p);
 void			put_pixel(int *add, int i, int j, t_param *p);
 void			adapt_rot_z(t_point *a, t_point *b, t_param *p);
 void			adapt_coord(t_point *a, t_point *b, t_param *p);
